@@ -1,5 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import crypto from "crypto";
 
 
 const userSchema = new Schema(
@@ -63,9 +65,73 @@ const userSchema = new Schema(
     }
 )
 
-userSchema.pre("save", ()=>{
+// hash password before save to mongodb
+userSchema.pre("save", async function (next){
+
+    if(!this.ismodified("password")) return next();
+
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
 
 })
+
+// check password is correct or not 
+userSchema.methods.isPasswordCorrect = async function(password){
+        
+     return await bcrypt.compare(password, this.password);
+};
+
+
+//generate Access Token
+
+userSchema.methods.generateAccessToken = function(){
+
+   return jwt.sign(
+        {
+            _id: this._id,
+            email: this.email,
+            username: this.userName
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        {
+            expiresIn: process.env.ACCESS_TOKEN_EXPIRY
+        }
+    )
+}
+
+// generate refresh token
+
+userSchema.methods.generateRefreshToken = function(){
+
+   return jwt.sign(
+        {
+            _id: this._id
+
+        },
+        process.env.REFRESH_TOKEN_SECRET,
+        {
+            expiresIn: process.env.REFRESH_TOKEN_EXPIRY
+        }
+    )
+}
+
+// Generate temporary token
+
+userSchema.methods.generateTemporaryToken = function(){
+
+    const unhashToken = crypto.randomBytes(20).toString("hex");
+
+    const hashToken = crypto
+    .createHash("sha256")
+    .update(unhashToken)
+    .digest("hex")
+
+
+    const tokenExpiry = Date.now() + (20*60*1000)   // 20min
+
+    return { unhashToken, hashToken, tokenExpiry }
+}
+
 
 export const User = mongoose.model("User", userSchema);        // collection name will be users
 
