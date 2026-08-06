@@ -66,13 +66,11 @@ const userSchema = new Schema(
 )
 
 // hash password before save to mongodb
-userSchema.pre("save", async function (next){
+userSchema.pre("save", async function(){    // remove next callback async await handle it automatically and avoid call next twice
 
-    if(!this.ismodified("password")) return next();
+    if(!this.isModified("password")) return;
 
     this.password = await bcrypt.hash(this.password, 10);
-    next();
-
 })
 
 // check password is correct or not 
