@@ -4,6 +4,12 @@ import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler} from "../utils/asyncHandler.js";
 import { sendEmail, emailVerificationMailContent} from "../utils/mail.js";
 
+
+const options = {
+        httpOnly: true,
+        secure: true
+    };
+
 const generateAccessAndRefreshToken =  async (userId) => {
 
     try {
@@ -107,10 +113,7 @@ const login = asyncHandler( async(req, res) => {
         "-password -isEmailVerified -refreshToken -forgotPasswordToken -forgotPasswordExpiry -emailVerificationToken -emailVerificationExpiry"
     );
 
-    const options = {
-        httpOnly: true,
-        secure: true
-    };
+    
 
     return res
         .status(200)
@@ -128,6 +131,23 @@ const login = asyncHandler( async(req, res) => {
 
 })
 
+const logout = asyncHandler( async(req, res) => {
+
+   await User.findByIdAndUpdate(
+    req.user._id,
+    {
+        $set:{
+            refreshToken:""
+        }
+    }
+   );
+
+   res.status(200)
+      .clearCookie("accessToken",options)
+      .clearCookie("refreshToken",options)
+      .json( new ApiResponse(200,{},"User logout successfully"))
+
+});
 
 
 
@@ -135,4 +155,5 @@ const login = asyncHandler( async(req, res) => {
 export {
     registerUser,
     login,
+    logout,
 }
