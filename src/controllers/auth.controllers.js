@@ -263,27 +263,30 @@ const resendEmailVerification  = asyncHandler( async(req, res) => {
 
 const newAccessToken = asyncHandler( async(req, res) => {
 
-    const incomingRefreshToken = req.cookie.refreshToken || req.body.refreshToken ;
+    const incomingRefreshToken = req.cookies?.refreshToken || req.body?.refreshToken ;
 
     if(!incomingRefreshToken){
         throw new ApiError(401, "Unauthorized access");
     };
    
    try {
+
      const decodedToken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_SECRET);
 
-     const user = await User.findById(decodedToken?._id);
+     const user = await User.findOne({_id : decodedToken?._id});
+
      
      if(!user){
         throw new ApiError(401, "Invalid refresh token")
      };
 
-      if(incomingRefreshToken !== user?.refreshToken){
+     if(incomingRefreshToken !== user?.refreshToken){
         throw new ApiError(401, "Refresh Token in expired")
       }
 
-      const {accessToken, refreshToken: newRefreshToken} = await generateAccessAndRefreshToken(user._id);
+      const {accessToken, refreshToken: newRefreshToken } = await generateAccessAndRefreshToken(user._id);
 
+      console.log()
       user.refreshToken = newRefreshToken;
       user.save();
 
@@ -302,6 +305,7 @@ const newAccessToken = asyncHandler( async(req, res) => {
  
    } catch (error) {
 
+    console.error("error:",error);
     throw new ApiError(401, "Invalid refresh token")
     
    }
@@ -319,15 +323,16 @@ const forgotPasswordRequest = asyncHandler( async(req, res) => {
         throw new ApiError(400,"Email or Username is Required")
     }
     
-    const user = User.findOne({
+    const user = await User.findOne({
         $or: [{email}, {userName: username}]
     });
+
 
     if(!user){
       throw new ApiError(400,"User does not exists")
     }
 
-    const {  unhashToken, hashToken, tokenExpiry }=  user.generateTemporaryToken()
+    const {  unhashToken, hashToken, tokenExpiry }=  user.generateTemporaryToken();
 
     user.forgotPasswordToken = hashToken;
     user.forgotPasswordExpiry = tokenExpiry;
