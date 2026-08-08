@@ -1,4 +1,5 @@
 import { body } from "express-validator";
+import { AvailableUserRoles } from "../utils/constants";
 
 
 const userRegisterValidator = () => {
@@ -79,8 +80,21 @@ const userChangeCurrentPasswordValidator = () => {
             .withMessage("Old password is required"),
 
         body("newPassword")
-            .notEmpty()
-            .withMessage("New password is required"),    
+         .trim()
+         .notEmpty()
+         .withMessage("Password is required")
+         .isLength({min: 8})
+         .withMessage("Password must be 8 charactor long")
+         .isStrongPassword(
+                {
+                    minLength: 8,
+                    minUppercase: 1,
+                    minLowercase: 1,
+                    minNumbers: 1,
+                    minSymbols: 1
+                }
+             )
+         .withMessage("Password must conatin at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character"),    
     ]
 }
 const userForgotPasswordValidator = () => {
@@ -98,8 +112,75 @@ const userResetForgotPasswordValidator = () => {
 
     return [
         body("newPassword")
-            .notEmpty()
-            .withMessage("New password is required"),
+         .trim()
+         .notEmpty()
+         .withMessage("Password is required")
+         .isLength({min: 8})
+         .withMessage("Password must be 8 charactor long")
+         .isStrongPassword(
+                {
+                    minLength: 8,
+                    minUppercase: 1,
+                    minLowercase: 1,
+                    minNumbers: 1,
+                    minSymbols: 1
+                }
+             )
+         .withMessage("Password must conatin at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character"),
+    ]
+}
+
+const createProjectValidator = () =>{
+    return [
+        body("name")
+           .notEmpty()
+           .withMessage("Name field is required"),
+          
+        body("description")
+            .optional()   
+    ]
+}
+
+const updateProjectValidator = () =>{
+    return [
+        body("name")
+           .optional()
+           .notEmpty()
+           .withMessage("Name field is required"),
+          
+        body("description")
+            .optional()     
+    ]
+}
+
+const addMemberToProjectValidator = () =>{
+    return [
+        body("name")
+           .optional()
+           .notEmpty()
+           .withMessage("Name field is required"),
+
+        body("username")
+           .optional()
+           .notEmpty()
+           .withMessage("Name field is required"),
+        
+        body("role")
+          .notEmpty()
+          .withMessage("Role field is required")
+          .isIn(AvailableUserRoles)
+          .withMessage("Role is invalid")
+
+    ]
+}
+
+const updateProjectMemberRoleValidator = () =>{
+    return[
+         body("role")
+          .notEmpty()
+          .withMessage("Role field is required")
+          .isIn(AvailableUserRoles)
+          .withMessage("Role is invalid")
     ]
 }
 
@@ -108,6 +189,9 @@ export {
     userLoginValidator,
     userChangeCurrentPasswordValidator,
     userForgotPasswordValidator,
-    userResetForgotPasswordValidator
-
+    userResetForgotPasswordValidator,
+    createProjectValidator,
+    updateProjectValidator,
+    addMemberToProjectValidator,
+    updateProjectValidator
 }
