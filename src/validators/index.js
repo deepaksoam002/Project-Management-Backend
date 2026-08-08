@@ -193,5 +193,5 @@ export {
     createProjectValidator,
     updateProjectValidator,
     addMemberToProjectValidator,
-    updateProjectValidator
+    updateProjectMemberRoleValidator
 }

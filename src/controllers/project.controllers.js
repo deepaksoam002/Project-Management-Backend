@@ -1,4 +1,4 @@
-import { User, user } from "../models/user.models.js";
+import { User } from "../models/user.models.js";
 import { Project } from "../models/project.models";
 import { ProjectMember } from "../models/projectmember.models.js";
 import { ApiError } from "../utils/apiError.js";
