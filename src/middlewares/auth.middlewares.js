@@ -40,10 +40,10 @@ export const verifyJwt = asyncHandler( async(req, res, next) => {
 
 export const verifyProjectRolePermissions = (allowedRole=[]) =>{
 
-    asyncHandler( (req, res, next) => {
+    return asyncHandler( async (req, res, next) => {
 
         const {projectId} = req.params;
-        const {userId} = req.user._id;
+        const userId = req.user._id;
         
 
         const project = await ProjectMember.findOne(

@@ -1,11 +1,12 @@
 import { User } from "../models/user.models.js";
-import { Project } from "../models/project.models";
+import { Project } from "../models/project.models.js";
 import { ProjectMember } from "../models/projectmember.models.js";
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import mongoose from "mongoose";
 import { AvailableUserRoles, UserRolesEnum } from "../utils/constants.js";
+import { matchedData } from "express-validator";
 
 
 
@@ -156,17 +157,18 @@ const getProjectsDetails = asyncHandler(async (req, res) => {
 
 const updateProject = asyncHandler(async (req, res) => {
 
-    const { name, description } = req.body;
     const { projectId } = req.params;
+    const update = matchedData(req, { locations: ["body"] });
 
     const project = await Project.findByIdAndUpdate(
         projectId,
         {
-            name,
-            description
-        }, {
-        new: true
-    }
+            $set: update
+
+        },
+        {
+            new: true
+        }
     )
 
     if (!project) {
@@ -209,6 +211,7 @@ const listProjectMember = asyncHandler(async (req, res) => {
     const { projectId } = req.params
 
     const project = await Project.findById(projectId);
+    
     if (!project) {
         throw new ApiError(404, "Project not found")
     }
@@ -239,7 +242,7 @@ const listProjectMember = asyncHandler(async (req, res) => {
             }, {
                 $addFields: {
                     user: {
-                        $arrayElemAt: ["user", 0]
+                        $arrayElemAt: ["$user", 0]
                     }
                 }
             }, {
@@ -254,6 +257,10 @@ const listProjectMember = asyncHandler(async (req, res) => {
             }
         ]
     )
+
+    if(!projectMembers){
+        throw new ApiError(404, "Project member not found")
+    }
 
     return res.status(200)
         .json(
@@ -284,11 +291,11 @@ const addMemberToProject = asyncHandler(async (req, res) => {
     };
 
     await ProjectMember.findOneAndUpdate({
-        user: new mongoose.Types.ObjectId(user._id),
-        project: new mongoose.Types.ObjectId(projectId)
+        user: user._id,
+        project: projectId
     }, {
-        user: new mongoose.Types.ObjectId(user._id),
-        project: new mongoose.Types.ObjectId(projectId),
+        user: user._id,
+        project: projectId,
         role: role
     }, {
         new: true,
@@ -299,7 +306,7 @@ const addMemberToProject = asyncHandler(async (req, res) => {
     return res.status(201)
         .json(
             new ApiResponse(
-                200,
+                201,
                 {},
                 "Project member added successfully"
             )
@@ -310,9 +317,9 @@ const addMemberToProject = asyncHandler(async (req, res) => {
 const updateProjectMemberRole = asyncHandler(async (req, res) => {
 
     const { projectId, userId } = req.params;
-    const { newRole } = req.body;
+    const { role } = req.body;
 
-    if (!AvailableUserRoles.includes(newRole)) {
+    if (!AvailableUserRoles.includes(role)) {
         throw new ApiError(400, "Invalid role")
     }
 
@@ -329,7 +336,7 @@ const updateProjectMemberRole = asyncHandler(async (req, res) => {
 
     const projectMember = await ProjectMember.findByIdAndUpdate(
         isProjectMemberExists._id, {
-        role: newRole
+        role: role
     }, {
         new: true
     }

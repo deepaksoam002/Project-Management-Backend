@@ -6,7 +6,7 @@ import { verifyJwt, verifyProjectRolePermissions } from "../middlewares/auth.mid
 import { AvailableUserRoles, UserRolesEnum } from "../utils/constants.js";
 
 
-const router = Router()
+const router = Router();
 
 
 router.use(verifyJwt)
