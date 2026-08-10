@@ -4,7 +4,7 @@ import { AvailableTaskStatues, TaskStatusEnum } from "../utils/constants.js";
 
 const taskSchema = new Schema(
     {
-       tittle:{
+       title:{
             type: String,
             required: true,
             trim: true

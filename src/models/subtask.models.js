@@ -3,7 +3,7 @@ import mongoose, { Schema} from "mongoose";
 
 const subTaskSchema = new Schema(
     {
-         tittle: {
+         title: {
               type: String,
               required: true,
               trim: true

@@ -14,7 +14,7 @@ const projectNoteSchema = new Schema(
             ref: "User",
             required: true
          },
-         constent: {
+         content: {
             type: String,
             required: true
          }

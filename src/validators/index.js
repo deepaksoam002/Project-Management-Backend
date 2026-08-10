@@ -1,5 +1,5 @@
 import { body } from "express-validator";
-import { AvailableUserRoles } from "../utils/constants";
+import { AvailableTaskStatues, AvailableUserRoles } from "../utils/constants.js";
 
 
 const userRegisterValidator = () => {
@@ -184,6 +184,85 @@ const updateProjectMemberRoleValidator = () =>{
     ]
 }
 
+const createTaskValidator = () => {
+    return [
+        body("title")
+        .notEmpty()
+        .withMessage("title is required"),
+        body("description")
+        .optional(),
+        body("assignedTo")
+        .optional(),
+        body("status")
+        .notEmpty()
+        .withMessage("Status is required")
+        .isIn(AvailableTaskStatues)
+        .withMessage("Status is invalid")
+        
+    ]
+}
+
+const updateTaskValidator = () => {
+    return [
+         body("title")
+         .optional()
+        .notEmpty()
+        .withMessage("title is required"),
+        body("description")
+        .optional(),
+        body("assignedTo")
+        .optional(),
+        body("status")
+        .optional()
+        .notEmpty()
+        .withMessage("Status is required")
+        .isIn(AvailableTaskStatues)
+        .withMessage("Status is invalid")
+        
+    ]
+}
+
+const createSubTaskValidator = () => {
+    return [
+         body("title")
+        .notEmpty()
+        .withMessage("title is required"),
+        body("description")
+        .optional(),
+        body("isCompleted")
+        .optional()
+    ]
+}
+const updateSubTaskValidator = () => {
+    return [
+         body("title")
+         .optional()
+        .notEmpty()
+        .withMessage("title is required"),
+        body("description")
+        .optional(),
+        body("isCompleted")
+        .optional()
+
+    ]
+}
+
+const createNotesValidator = () => {
+    return [
+         body("content")
+        .notEmpty()
+        .withMessage("content is required"),
+    ]
+}
+
+const updatesNotesValidator = () => {
+    return [
+         body("content")
+        .notEmpty()
+        .withMessage("content is required"),
+    ]
+}
+
 export {
     userRegisterValidator,
     userLoginValidator,
@@ -193,5 +272,12 @@ export {
     createProjectValidator,
     updateProjectValidator,
     addMemberToProjectValidator,
-    updateProjectMemberRoleValidator
+    updateProjectMemberRoleValidator,
+    createTaskValidator,
+    updateTaskValidator,
+    createSubTaskValidator,
+    updateSubTaskValidator,
+    createNotesValidator,
+    updatesNotesValidator
+
 }
