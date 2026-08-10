@@ -1,0 +1,657 @@
+{
+  "info": {
+    "name": "project-management-backend",
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "description": "",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "projectMUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "register",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/auth/register",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "auth", "register"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"yourusername\",\n    \"email\": \"{{testEmail}}\",\n    \"password\": \"{{testPassword}}\"\n}",
+              "options": {
+                "raw": { "language": "json" }
+              }
+            }
+          }
+        },
+        {
+          "name": "refresh-token",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/auth/refresh-token",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "auth", "refresh-token"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"{{testEmail}}\",\n    \"password\": \"{{testPassword}}\"\n}",
+              "options": {
+                "raw": { "language": "json" }
+              }
+            }
+          }
+        },
+        {
+          "name": "reset-password",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/auth/reset-password/b30d027f6a631edeb592c4dc8ac1be73af858f1e",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "auth", "reset-password", "b30d027f6a631edeb592c4dc8ac1be73af858f1e"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"newPassword\": \"Hta@1234\"\n}",
+              "options": {
+                "raw": { "language": "json" }
+              }
+            }
+          }
+        },
+        {
+          "name": "current-user",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/auth/current-user",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "auth", "current-user"]
+            }
+          }
+        },
+        {
+          "name": "verify-email",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/auth/verify-email/50cd9065f8ecfa7fb711944f2f21ccaa458cc228",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "auth", "verify-email", "50cd9065f8ecfa7fb711944f2f21ccaa458cc228"]
+            }
+          }
+        },
+        {
+          "name": "resend-email-verification",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/auth/resend-email-verification",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "auth", "resend-email-verification"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"oldPassword\": \"Hta@1234\",\n    \"newPassword\": \"Deep@1234\"\n}",
+              "options": {
+                "raw": { "language": "json" }
+              }
+            }
+          }
+        },
+        {
+          "name": "change-password",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/auth/change-password",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "auth", "change-password"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"oldPassword\": \"Hta@1234\",\n    \"newPassword\": \"Deep@1234\"\n}",
+              "options": {
+                "raw": { "language": "json" }
+              }
+            }
+          }
+        },
+        {
+          "name": "forgot-password",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/auth/refresh-token",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "auth", "refresh-token"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"{{testEmail}}\",\n    \"password\": \"{{testPassword}}\"\n}",
+              "options": {
+                "raw": { "language": "json" }
+              }
+            }
+          }
+        },
+        {
+          "name": "logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer " },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "", "type": "string" }
+              ]
+            },
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/auth/logout",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "auth", "logout"]
+            }
+          }
+        },
+        {
+          "name": "login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/auth/login",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "auth", "login"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"{{testEmail}}\",\n    \"password\": \"{{testPassword}}\"\n}",
+              "options": {
+                "raw": { "language": "json" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "healthcheck",
+      "item": [
+        {
+          "name": "healthcheck",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "" },
+              { "key": "Content-Type", "value": "json" }
+            ],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/healthcheck/",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "healthcheck", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "notes",
+      "item": [
+        {
+          "name": "create-project-notes",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/notes/:projectId",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "notes", ":projectId"],
+              "variable": [
+                { "key": "projectId", "value": "6a784b8436a5a69d3f4a19cf" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"content\":\"Project Administrators:** Create and manage projects, assign roles, oversee all project activities,Project Admins:** Manage tasks and project content within assigned projects,Team Members:** View projects, update task completion status, access project information\"\n}",
+              "options": {
+                "raw": { "language": "json" }
+              }
+            }
+          }
+        },
+        {
+          "name": "update-note-by-id (delete)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/notes/:projectId/n/:taskId",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "notes", ":projectId", "n", ":taskId"],
+              "variable": [
+                { "key": "projectId", "value": "6a784b8436a5a69d3f4a19cf" },
+                { "key": "taskId", "value": "6a78b872c8de10b08ae57d70" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"content\":\"Project-Management-Backend is a RESTful API service designed to support collaborative project management. The system enables teams to organize projects, manage tasks with subtasks, maintain project notes, and handle user authentication with role-based access control.\"\n}",
+              "options": {
+                "raw": { "language": "json" }
+              }
+            }
+          }
+        },
+        {
+          "name": "update-note-by-id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/notes/:projectId/n/:taskId",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "notes", ":projectId", "n", ":taskId"],
+              "variable": [
+                { "key": "projectId", "value": "6a784b8436a5a69d3f4a19cf" },
+                { "key": "taskId", "value": "6a78990fc8de10b08ae57d63" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"content\":\"Project-Management-Backend is a RESTful API service designed to support collaborative project management. The system enables teams to organize projects, manage tasks with subtasks, maintain project notes, and handle user authentication with role-based access control.\"\n}",
+              "options": {
+                "raw": { "language": "json" }
+              }
+            }
+          }
+        },
+        {
+          "name": "get-note-by-id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/notes/:projectId/n/:taskId",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "notes", ":projectId", "n", ":taskId"],
+              "variable": [
+                { "key": "projectId", "value": "6a784b8436a5a69d3f4a19cf" },
+                { "key": "taskId", "value": "6a78990fc8de10b08ae57d63" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "list-project-notes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/notes/:projectId",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "notes", ":projectId"],
+              "variable": [
+                { "key": "projectId", "value": "6a784b8436a5a69d3f4a19cf" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "project",
+      "item": [
+        {
+          "name": "create-projects",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/projects/",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "projects", ""]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\":\"New Test Project\",\n    \"description\":\"This is a test project \"\n}",
+              "options": {
+                "raw": { "language": "json" }
+              }
+            }
+          }
+        },
+        {
+          "name": "get-projects",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/projects/",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "projects", ""]
+            }
+          }
+        },
+        {
+          "name": "add-member-to-project",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/projects/:projectId/members",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "projects", ":projectId", "members"],
+              "variable": [
+                { "key": "projectId", "value": "6a784b8436a5a69d3f4a19cf" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\":\"{{testEmail}}\",\n    \"role\":\"member\"\n}",
+              "options": {
+                "raw": { "language": "json" }
+              }
+            }
+          }
+        },
+        {
+          "name": "list-project-member",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/projects/:projectId/members",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "projects", ":projectId", "members"],
+              "variable": [
+                { "key": "projectId", "value": "6a784b8436a5a69d3f4a19cf" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "delete-project",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/projects/:projectId",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "projects", ":projectId"],
+              "variable": [
+                { "key": "projectId", "value": "6a78809aea7263a5574e3d87" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "get-project-details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/projects/:projectId",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "projects", ":projectId"],
+              "variable": [
+                { "key": "projectId", "value": "6a784b8436a5a69d3f4a19cf" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "update-project-details",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/projects/:projectId",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "projects", ":projectId"],
+              "variable": [
+                { "key": "projectId", "value": "6a78809aea7263a5574e3d87" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"description\":\"this is test project for postman testing\"\n}",
+              "options": {
+                "raw": { "language": "json" }
+              }
+            }
+          }
+        },
+        {
+          "name": "update-project-member-role",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/projects/:projectId/members/:userId",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "projects", ":projectId", "members", ":userId"],
+              "variable": [
+                { "key": "projectId", "value": "6a784b8436a5a69d3f4a19cf" },
+                { "key": "userId", "value": "6a785c235f902f17766da3f5" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"role\":\"project_admin\"\n}",
+              "options": {
+                "raw": { "language": "json" }
+              }
+            }
+          }
+        },
+        {
+          "name": "delete-project-member",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/projects/:projectId/members/:userId",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "projects", ":projectId", "members", ":userId"],
+              "variable": [
+                { "key": "projectId", "value": "6a784b8436a5a69d3f4a19cf" },
+                { "key": "userId", "value": "6a785c235f902f17766da3f5" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "subtask",
+      "item": [
+        {
+          "name": "update-subtasks (delete)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/tasks/:projectId/st/:subTaskId",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "tasks", ":projectId", "st", ":subTaskId"],
+              "variable": [
+                { "key": "projectId", "value": "6a784b8436a5a69d3f4a19cf" },
+                { "key": "subTaskId", "value": "6a79b3189779e34dd28b60a1" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\":\"Test project routes with postman\"\n}",
+              "options": {
+                "raw": { "language": "json" }
+              }
+            }
+          }
+        },
+        {
+          "name": "update-subtasks",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/tasks/:projectId/st/:subTaskId",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "tasks", ":projectId", "st", ":subTaskId"],
+              "variable": [
+                { "key": "projectId", "value": "6a784b8436a5a69d3f4a19cf" },
+                { "key": "subTaskId", "value": "6a79b3189779e34dd28b60a1" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\":\"Test project routes with postman\"\n}",
+              "options": {
+                "raw": { "language": "json" }
+              }
+            }
+          }
+        },
+        {
+          "name": "get-subtasks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/tasks/:projectId/t/:taskId/subtasks",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "tasks", ":projectId", "t", ":taskId", "subtasks"],
+              "variable": [
+                { "key": "projectId", "value": "6a784b8436a5a69d3f4a19cf" },
+                { "key": "taskId", "value": "6a78e89f3d0bff11056b2947" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "create-subtasks",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/tasks/:projectId/t/:taskId/subtasks",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "tasks", ":projectId", "t", ":taskId", "subtasks"],
+              "variable": [
+                { "key": "projectId", "value": "6a784b8436a5a69d3f4a19cf" },
+                { "key": "taskId", "value": "6a78e89f3d0bff11056b2947" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\":\"test project routes\",\n    \"description\":\"test project api with postman\",\n    \"isCompleted\":\"false\"\n}",
+              "options": {
+                "raw": { "language": "json" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "task",
+      "item": [
+        {
+          "name": "create-task",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/tasks/:projectId",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "tasks", ":projectId"],
+              "variable": [
+                { "key": "projectId", "value": "6a784b8436a5a69d3f4a19cf" }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "title", "value": "Create note Routes", "type": "text" },
+                { "key": "description", "value": "Create note Routes With Rest Api", "type": "text" },
+                { "key": "assignedTo", "value": "6a785c395f902f17766da3f9", "type": "text" },
+                { "key": "status", "value": "todo", "type": "text" },
+                { "key": "files", "src": "/C:/Users/dell/OneDrive/Pictures/Screenshots 1/Screenshot 2026-05-23 010030.png", "type": "file" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "get-task-by-Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/tasks/:projectId/t/:taskId",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "tasks", ":projectId", "t", ":taskId"],
+              "variable": [
+                { "key": "projectId", "value": "6a784b8436a5a69d3f4a19cf" },
+                { "key": "taskId", "value": "6a78e89f3d0bff11056b2947" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "get-task",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{projectMUrl}}/api/v1/tasks/:projectId",
+              "host": ["{{projectMUrl}}"],
+              "path": ["api", "v1", "tasks", ":projectId"],
+              "variable": [
+                { "key": "projectId", "value": "6a784b8436a5a69d3f4a19cf" }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
