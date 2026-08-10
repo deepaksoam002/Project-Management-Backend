@@ -128,6 +128,3 @@ For the full feature scope and requirements this backend was built against, see 
 3. Commit your changes
 4. Push to your branch and open a pull request
 
-## License
-
-Not currently specified — add a `LICENSE` file if you'd like to define usage terms.
