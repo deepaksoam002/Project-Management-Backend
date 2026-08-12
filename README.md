@@ -10,6 +10,9 @@ A RESTful API service for collaborative project management. Built with Node.js, 
 - **Subtasks** — Create, update, list, and delete subtasks under a task
 - **Notes** — Add, update, list, and delete notes scoped to a project
 - **Role-based access control** — Project-level roles (e.g. `project_admin`, `member`)
+- **Structured logging** — Request logging via Morgan, piped into Winston for structured logs (console + log files)
+- **Rate limiting** — Global rate limit on all routes, with a stricter limit on auth endpoints to prevent brute-force attacks
+- **Security headers** — Helmet for HTTP security header hardening
 
 ## Tech Stack
 
@@ -22,8 +25,9 @@ A RESTful API service for collaborative project management. Built with Node.js, 
 | Validation | express-validator |
 | File uploads | Multer |
 | Email | Nodemailer + Mailgen |
+| Logging | Winston, Morgan |
+| Security | Helmet, express-rate-limit |
 | Dev tools | nodemon, prettier |
-
 ## Project Structure
 
 ```
@@ -76,12 +80,14 @@ ACCESS_TOKEN_EXPIRY=1d
 REFRESH_TOKEN_SECRET=your_refresh_token_secret
 REFRESH_TOKEN_EXPIRY=10d
 
-SMTP_HOST=your_smtp_host
+SMTP_HOST=your_smtp_host 
 SMTP_PORT=your_smtp_port
 SMTP_USER=your_smtp_username
 SMTP_PASS=your_smtp_password
 
 BASE_URL=http://localhost:8000
+
+NODE_ENV=Development
 ```
 
 ### Running the Server
