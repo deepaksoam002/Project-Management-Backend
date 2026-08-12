@@ -5,6 +5,7 @@ import { asyncHandler} from "../utils/asyncHandler.js";
 import { sendEmail, emailVerificationMailContent, forgotPasswordMailContent} from "../utils/mail.js";
 import  crypto  from "crypto";
 import jwt from "jsonwebtoken";
+import logger from "../utils/logger.js";
 
 
 const options = {

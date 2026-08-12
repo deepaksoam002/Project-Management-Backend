@@ -17,7 +17,7 @@ const globalErrorHandler = (err, req, res, next) => {
         success: false,
         message: error.message,
         errors: error.errors,
-        stack : error.stack
+        stack : process.env.NODE_ENV = "production"? undefined : error.stack
     }
 
     return res.status(error.statusCode).json(response);

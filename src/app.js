@@ -1,18 +1,40 @@
-import express from "express";
+import express, { response } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-
+import logger from "./utils/logger.js";
+import morgan from "morgan";
+import helmet from "helmet";
+import rateLimiter from "express-rate-limit";
 
 
 const app = express();
 
 // basic configurations
-
+app.use(helmet());
 app.use(express.json({ limit:"16kb" }));
 app.use(express.urlencoded({ extended: true, limit:"16kb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
+app.use(rateLimiter({ windowMs: 10 * 60 * 1000, max: 100}))
 
+
+
+
+const morganFormat = ':method :url :status :response-time ms'
+
+app.use(morgan(morganFormat,{
+    stream: {
+        write: (message) =>{
+            const logObject = {
+                method: message.split(' ')[0],
+                url: message.split(' ')[1],
+                status: message.split(' ')[2],
+                responseTime: message.split(' ')[3],
+            };
+            logger.info(JSON.stringify(logObject));
+        }
+    }
+}))
 
 // CORS configurations 
 

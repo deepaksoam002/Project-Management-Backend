@@ -3,6 +3,13 @@ import { registerUser, login, logout, verifyEmail, newAccessToken, forgotPasswor
 import { userRegisterValidator, userLoginValidator, userForgotPasswordValidator, userResetForgotPasswordValidator, userChangeCurrentPasswordValidator } from "../validators/index.js"
 import { validate } from "../middlewares/validator.middlewares.js";
 import { verifyJwt } from "../middlewares/auth.middlewares.js";
+import rateLimit from "express-rate-limit";
+
+
+const loginLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 5, // only 5 login attempts per 15 min
+});
 
 const router = Router();
 
@@ -11,7 +18,7 @@ const router = Router();
 router.route("/register")
       .post(userRegisterValidator(), validate, registerUser);
 router.route("/login")
-      .post(userLoginValidator(), validate, login);
+      .post(loginLimiter, userLoginValidator(), validate, login);
 router.route("/verify-email/:verificationToken")
       .get(verifyEmail);
 router.route("/refresh-token")
